@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 def cash_on_hand_function():
-    cash_on_hand_fp = Path.cwd()/"csv_reports"/"Cash_On_Hand.csv"
+    cash_on_hand_fp = Path.cwd()/"Cash_On_Hand.csv" # change file directory later, whoever using this
     fp_write = Path.cwd()/"summary_report.txt"
     fp_write.touch
 
@@ -31,3 +31,4 @@ def cash_on_hand_function():
             for cash_deficit in cash_on_hand_difference:
                 print(cash_deficit)
                 file.write(cash_deficit+"\n") 
+cash_on_hand_function()
