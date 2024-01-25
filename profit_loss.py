@@ -31,6 +31,8 @@ def profit_loss_function():
         for deficit in profit_deficit_list:
             print(deficit)
             file.write(deficit + "\n")
+    
+    file.close()
 
     # Optionally, return the list if needed
     return profit_deficit_list

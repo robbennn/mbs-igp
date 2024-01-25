@@ -31,4 +31,8 @@ def cash_on_hand_function():
             for cash_deficit in cash_on_hand_difference:
                 print(cash_deficit)
                 file.write(cash_deficit+"\n") 
-cash_on_hand_function()
+
+        return cash
+                
+
+
