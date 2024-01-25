@@ -34,6 +34,3 @@ def profit_loss_function():
 
     # Optionally, return the list if needed
     return profit_deficit_list
-
-# Calling the function
-profit_loss_function()
