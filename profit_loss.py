@@ -29,10 +29,11 @@ def profit_loss_function():
     # Writing to file within the function
     with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
         for deficit in profit_deficit_list:
+            print(deficit)
             file.write(deficit + "\n")
 
     # Optionally, return the list if needed
     return profit_deficit_list
 
 # Calling the function
-print(profit_loss_function())
+profit_loss_function()
