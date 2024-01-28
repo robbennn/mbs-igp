@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 def profit_loss_function():
-    net_profit_fp = Path.cwd() / "Profit_and_Loss.csv"  # Ensure correct file path
+    net_profit_fp = Path.cwd() / "Profit_and_Loss.csv"
     fp_write = Path.cwd() / "Summary_report.txt"
     fp_write.touch()
 
@@ -10,10 +10,10 @@ def profit_loss_function():
 
     with net_profit_fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
-        next(reader)  # Skip header
+        next(reader)
 
         for row in reader:
-            day = int(row[0])  # Corrected day assignment
+            day = int(row[0])
             net_profit = int(row[4])
             net_profit_list.append([day, net_profit])
 
@@ -23,17 +23,17 @@ def profit_loss_function():
     for day, net_profit_amount in net_profit_list:
         if net_profit_amount < previous_day_profit:
             profit_deficit = previous_day_profit - net_profit_amount
-            profit_deficit_list.append(f"[PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD {profit_deficit}")
+            profit_deficit_list.append(f"[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD {profit_deficit}")
         previous_day_profit = net_profit_amount
 
-    # Writing to file within the function
-    with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
-        for deficit in profit_deficit_list:
-            print(deficit)
-            file.write(deficit + "\n")
+    # Find the top 3 highest net profit deficits
+    if profit_deficit_list:
+        top_3_deficits = sorted(profit_deficit_list, key=lambda x: int(x.split(":")[-1].split(" ")[-1]), reverse=True)[:3]
 
-    highest_net_profit_deficit = max(profit_deficit_list, key=lambda x: int(x.split(":")[1].split(" ")[-1]))
-    with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
-        file.write(highest_net_profit_deficit + "\n")
+        if top_3_deficits:
+            with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
+                for i, deficit in enumerate(top_3_deficits, start=1):
+                    file.write(f"[Highest Net Profit Deficit] Day {i}: {deficit}\n")
+                    print(f"Highest Net Profit Deficit {i} written to summary_report.txt:", deficit)
 
 profit_loss_function()
