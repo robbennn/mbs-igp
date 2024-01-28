@@ -32,5 +32,8 @@ def profit_loss_function():
             print(deficit)
             file.write(deficit + "\n")
 
-    # Optionally, return the list if needed
-    return profit_deficit_list
+    highest_net_profit_deficit = max(profit_deficit_list, key=lambda x: int(x.split(":")[1].split(" ")[-1]))
+    with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
+        file.write(highest_net_profit_deficit + "\n")
+
+profit_loss_function()
