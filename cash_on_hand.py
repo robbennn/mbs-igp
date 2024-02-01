@@ -26,18 +26,19 @@ def cash_on_hand_function():
         if difference < 0:
             cash_on_hand_difference.append(f"[CASH DEFICIT] DAY: {cash_on_hand_list[cash][0]}, AMOUNT: SGD {abs(difference)}")
 
-    # Find the top 3 highest cash deficits
     if cash_on_hand_difference:
-        top_3_deficits = sorted(cash_on_hand_difference, key=lambda x: int(x.split(":")[2].split(" ")[-1]), reverse=True)[:3]
+        top_3_deficits = sorted(cash_on_hand_difference,key=lambda x: int(x.split(":")[2].split(" ")[-1]),reverse=True,)[:3]
+# lambda specifies how to extract a value from each element in profit_deficit_list for the purpose of sorting
+    # the lambda function converts this extracted value to an integer for proper numeric comparison during sorting.
 
-        if top_3_deficits:
-            with fp_write.open(mode="a", encoding="UTF-8", newline="") as file:
-                for i, deficit in enumerate(top_3_deficits, start=1):
-                    file.write(f"[HIGHEST CASH DEFICIT] {deficit}\n")
-                    print(f"Highest Cash Deficit {i} written to summary_report.txt:", deficit)
-
-                for deficit in cash_on_hand_difference:
-                    file.write(f"{deficit}\n")
-                    print("Cash Deficit written to summary_report.txt:", deficit)
-
+        with fp_write.open(mode="w", encoding="UTF-8", newline="") as file:
+            for i, deficit in enumerate(top_3_deficits, start=1):
+                ordinal_suffix = ["ST", "ND", "RD", "TH"][i % 4 - 1]  # Determines the suffix
+                prefix = f"[{'HIGHEST' if i == 1 else f'{i}{ordinal_suffix}'} CASH DEFICIT]"
+                #[index][0] retrieves the day as it is stored in your list but starts from 0, e.g [DAY 0]
+                #[index][0] + 1 adjusts the day number to 1.
+                file.write(f"{prefix}: {deficit[15:]}\n")
+                # Write all deficits
+            for deficit in cash_on_hand_difference:
+                file.write(f"{deficit}\n")
 cash_on_hand_function()
